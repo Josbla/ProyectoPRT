@@ -1,0 +1,2 @@
+<?php
+echo('cuenta desactivada');

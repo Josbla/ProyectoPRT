@@ -1,0 +1,54 @@
+
+    	/* Main Colors
+    	===============================*/
+    	.turq {background:#16A085;}
+    	.turq:checked {background:#1ABC9C;}
+    	.turq:hover {background:#1ABC9C;}
+
+    	.red {background:#C0392B;}
+    	.red:checked {background:#E74C3C;}
+    	.red:hover {background:#E74C3C;}
+
+		/* Radio Elements
+		===============================*/
+		.radio {
+		  position:relative;
+		  -webkit-appearance:none;
+		  -moz-appearance:none;
+		  width:20px;
+		  height:20px;
+		  margin:10px;
+		  margin-top:0px;
+		  -webkit-border-radius:100px;
+		     -moz-border-radius:100px;
+		          border-radius:100px;
+		  transition: all .3s ease-in-out;
+		  -moz-transition: all .3s ease-in-out;
+		  -webkit-transition: all .3s ease-in-out;
+		}
+
+		.radio:checked {
+		  transition: all .3s ease-in-out;
+		  -moz-transition: all .3s ease-in-out;
+		  -webkit-transition: all .3s ease-in-out;
+		}
+
+		.radio:checked:after{
+		  transition: all .3s ease-in-out;
+		  -moz-transition: all .3s ease-in-out;
+		  -webkit-transition: all .3s ease-in-out;
+		  background:transparent;
+		}
+
+		.radio:after {
+		  position:absolute;
+		  top:5px;
+		  left:5px;
+		  width:10px;
+		  height:10px;
+		  background:#fff;
+		  content:"";
+		  -webkit-border-radius:100px;
+		     -moz-border-radius:100px;
+		          border-radius:100px;
+		}
