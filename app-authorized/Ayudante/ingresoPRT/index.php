@@ -18,9 +18,9 @@
 						<div class="form-group row mt-3">
 							<label for="input-patente" class="col-sm-2 col-form-label">Patente</label>
 							<div class="col-sm-10 d-flex justify-content-around">
-							  <input type="text" class="form-control text-center col-sm-2 px-1" id="input-patente" placeholder="AB" name="patentebloque1">
-							  <input type="text" class="form-control text-center col-sm-2 px-1" id="input-patente" placeholder="CD" name="patentebloque2">
-							  <input type="text" class="form-control text-center col-sm-2 px-1" id="input-patente" placeholder="12" name="patentebloque3">
+							  <input type="text" class="form-control text-center col-sm-2 px-1" maxlength="2" minlength="2" id="input-patente" placeholder="AB" name="patentebloque1" style="text-transform:uppercase" pattern = "[a-zA-z]*">
+							  <input type="text" class="form-control text-center col-sm-2 px-1" maxlength="2" minlength="2" id="input-patente" placeholder="CD" name="patentebloque2" style="text-transform:uppercase" pattern="[a-zA-Z]{2}|[0-9]{2}">
+							  <input type="text" class="form-control text-center col-sm-2 px-1" maxlength="2" minlength="2" id="input-patente" placeholder="12" name="patentebloque3" pattern = "[0-9]{2}">
 							</div>
 						</div>
 
@@ -48,21 +48,21 @@
 						<div class="form-group row mt-2 de-flex">
 							<label for="input-asientos" class="col-sm-8 col-form-label">N° Corridas de Asientos incluida la del conductor</label>
 							<div class="col-sm-4 d-flex align-item-center">
-								<input type="text" class="form-control text-center px-1" id="input-asientos" placeholder="N° Asientos" name="asientos">	
+								<input type="text" class="form-control text-center px-1" id="input-asientos" placeholder="N° Asientos" name="asientos" pattern="[0-9]">	
 							</div>
 						</div>
 
 						<div class="form-group row mt-2">
 							<label for="input-combustible" class="col-sm-6 col-form-label">Tipo de combustible</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control text-center px-1" id="input-combustible" placeholder="Tipo de combustible" name="combustible">	
+								<select class="form-control text-center" name="combustible" id="input-combustible"></select>
 							</div>
 						</div>
 						
 						<div class="form-group row mt-2">
 							<label for="input-ejes" class="col-sm-6 col-form-label">N°/Disposición de Ejes(*)</label>
 							<div class="col-sm-6 d-flex align-item-center">
-								<input type="text" class="form-control text-center px-1" id="input-ejes" placeholder="N°/Disposición de Ejes" name="ejes">	
+								<input type="text" class="form-control text-center px-1" id="input-ejes" placeholder="N°/Disposición de Ejes" name="ejes" pattern="^[0-9]*$">	
 							</div>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 						<div class="form-group row mt-2">
 							<label for="input-vehiculo" class="col-sm-3 col-form-label">Tipo de vehículo</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control px-1" id="input-vehiculo" placeholder="Tipo de vehículo" name="vehiculo">	
+								<select name="vehiculo" id="input-vehiculo" class="form-control"></select>
 							</div>
 						</div>
 
@@ -85,7 +85,7 @@
 						<div class="form-group row mt-2">
 							<label for="input-modelo" class="col-sm-3 col-form-label">N° chasis</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control px-1 " id="input-modelo" placeholder="1ABCD2345E004352" name="modelo" style="letter-spacing: 0.3em;">
+								<input type="text" class="form-control px-1 " id="input-modelo" placeholder="1ABCD2345E004352" name="modelo" style="letter-spacing: 0.3em;" pattern="[0-9]">
 							</div>
 						</div>
 
@@ -94,28 +94,28 @@
 								<div class="form-group row mt-3">
 									<label for="input-cilindrada" class="col-sm-6 col-form-label">Cilindrada</label>
 									<div class="col-sm-6">
-										<input type="text" class="form-control px-1" id="input-cilindrada" placeholder="000 cm&sup3" name="cilindrada">	
+										<input type="text" class="form-control px-1" id="input-cilindrada" placeholder="000 cm&sup3" name="cilindrada" maxlength="4" minlength="3" pattern="^[0-9]*$">	
 									</div>
 								</div>
 
 								<div class="form-group row mt-3">
 									<label for="input-puertas" class="col-sm-6 col-form-label">N° Puertas</label>
 									<div class="col-sm-6">
-										<input type="text" class="form-control px-1" id="input-puertas" placeholder="4" name="puertas">	
+										<input type="text" class="form-control px-1" id="input-puertas" placeholder="4" name="puertas" pattern="[0-9]">	
 									</div>
 								</div>
 
 								<div class="form-group row mt-3">
 									<label for="input-traccion" class="col-sm-6 col-form-label">Tipo Tracción</label>
 									<div class="col-sm-6">
-										<input type="text" class="form-control px-1" id="input-traccion" placeholder="FWD" name="traccion">	
+										<select name="traccion" id="input-traccion" class="form-control"></select>
 									</div>
 								</div>
 
 								<div class="form-group row mt-3">
 									<label for="input-carroceria" class="col-sm-6 col-form-label">Tipo carroceria(*)</label>
 									<div class="col-sm-6 d-flex align-item-center">
-										<input type="text" class="form-control px-1" id="input-carroceria" placeholder="Liftback" name="carroceria">	
+										<select name="carroceria" id="input-carroceria" class="form-control"></select>	
 									</div>
 								</div>
 							</div>
@@ -123,7 +123,7 @@
 								<div class="form-group row mt-3">
 									<label for="input-cantasientos" class="col-sm-7 col-form-label">N° Asientos</label>
 									<div class="col-sm-5">
-										<input type="text" class="form-control px-1" id="input-cantasientos" placeholder="5" name="cantasientos">	
+										<input type="text" class="form-control px-1" id="input-cantasientos" placeholder="5" name="cantasientos" pattern="[0-9]*">	
 									</div>
 								</div>
 
@@ -137,14 +137,14 @@
 								<div class="form-group row mt-3">
 									<label for="input-peso" class="col-sm-7 col-form-label">Peso bruto vehícular (kg*)</label>
 									<div class="col-sm-5 d-flex align-item-center">
-										<input type="text" class="form-control px-1" id="input-peso" placeholder="180 cm" name="peso">	
+										<input type="text" class="form-control px-1" id="input-peso" placeholder="180 cm" name="peso" pattern="[0-9]*">	
 									</div>
 								</div>
 
 								<div class="form-group row mt-3">
 									<label for="input-cabina" class="col-sm-7 col-form-label">Tipo Cabina(*)</label>
 									<div class="col-sm-5 d-flex align-item-center">
-										<input type="text" class="form-control px-1" id="input-cabina" placeholder="180 cm" name="cabina">	
+										<select name="cabina" id="input-cabina" class="form-control"></select>
 									</div>
 								</div>
 							</div>
