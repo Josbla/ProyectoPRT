@@ -24,10 +24,32 @@ class InsertUsuario extends ConexionDatabase{
             $apeMat = strtoupper($_POST['uApeMat']);
 
             if($mail !=null & $mail!='' & $nombre != null & $nombre !='' & $apePat !=null & $apePat!='' & $apeMat !=null & $apeMat!=''){
-                $sqlQuery="Insert into Usuarios values(".$ultimaID.",'".$hoy.'T'.$hora."',1,".$_POST['uRol'].");
-                Insert into DataUsuario values('".$mail."','".$nombre."','".$apePat."','".$apeMat."',".$ultimaID.",2);
-                Insert into PasswordUsuario values('".$defaultPass."',".$ultimaID.",3);";
-                $statement = sqlsrv_query($connection, $sqlQuery);
+                
+                $sqlQueryUsuario = "Insert into Usuarios values(".$ultimaID.",'".$hoy.'T'.$hora."',1,".$_POST['uRol'].");";
+                
+                if ($statement = sqlsrv_query($connection, $sqlQueryUsuario)){
+                    
+                    $sqlQueryDataUsuario = "Insert into DataUsuario values('".$mail."','".$nombre."','".$apePat."','".$apeMat."',".$ultimaID.",2);";
+                    
+                    if ($statement = sqlsrv_query($connection, $sqlQueryDataUsuario)){
+                        
+                        $sqlQueryPassword = "Insert into PasswordUsuario values('".$defaultPass."',".$ultimaID.",3);";
+
+                        $statement = sqlsrv_query($connection, $sqlQueryPassword);
+                    
+                    }else{
+                        $sqlQueryDelete = "DELETE FROM usuarios WHERE IDUsuario = ".$ultimaID.";";
+                        
+                        $statement = sqlsrv_query($connection, $sqlQueryDelete);
+
+                        $_SESSION['failInsert']=1;
+                        header('Location: ../../app-authorized/Principal');
+                    }
+                }else{
+                    $_SESSION['failInsert']=1;
+                    header('Location: ../../app-authorized/Principal');
+                }                
+                
             }else{
                 $_SESSION['failInsert']=1;
                 header('Location: ../../app-authorized/Principal');

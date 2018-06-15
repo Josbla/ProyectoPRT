@@ -4,7 +4,7 @@ class ConexionDatabase{
 
     function connect(){
         //$serverName = "WIN-3HTPHCKDQ7B\MSSQLSERVER2014"; server 
-        $serverName="DESKTOP-31RNGEQ";//local
+        $serverName="DESKTOP-RDEF2A8";//local
         $connectionInfo = array("Database" => "PRT.System", "UID" => "prtadmin", "PWD" => "qwerty");
 
         $conn = sqlsrv_connect($serverName, $connectionInfo);

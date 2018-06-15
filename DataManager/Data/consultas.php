@@ -20,7 +20,6 @@ class Consultas extends ConexionDatabase{
             $statement = sqlsrv_query($connection, $sqlQuery);
 
             if(!$statement){
-                echo('Ocurrio el siguiente error: ');
                 die( print_r( sqlsrv_errors(), true));
             }
 
@@ -35,11 +34,18 @@ class Consultas extends ConexionDatabase{
                 }
                   
             }else{
-                echo('No hay data para mostrar.');
+               $usuarios = [];
             }
         }
-        sqlsrv_close($connection);
-        return $usuarios;
+        if (!empty($usuarios)){            
+            return $usuarios;
+            sqlsrv_close($connection);
+        }else{
+            return 0;
+            sqlsrv_close($connection);
+        }
+       
+       
     }
 
     function getLastIDUsuario(){
