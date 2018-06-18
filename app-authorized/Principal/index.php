@@ -30,48 +30,29 @@
         $consulta = new Consultas;
         $result = $consulta->listarUsuarios();
         $resultRoles = $consulta->getRolesDeUsuario();
-        $countUser = 0;
+        $resultPlantas = $consulta->getPlantas();
         $countRoles = 0;
+        $countPlantas = 0;
+        $resultXPag = 10;
+        $totalResults=count($result);
+        $paginas = ceil($totalResults/$resultXPag);
+        $iniciar = ($_GET['pagina']-1)*$resultXPag;
+        $finalizar = ($iniciar+$resultXPag);
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Bienvennido <?php echo( $_SESSION['nombre']);?></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="../../assets/bootstrap/css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="../../assets/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.css" />
-        <script src="../../assets/jquery/jquery-3.3.1.min.js"></script>
-        <script src="../../assets/bootstrap/js/bootstrap.js"></script>
-        <script src="../../assets/extensiones/extensiones.js"></script>
-    </head>
+    <?php include('../../master-page/header-admin.php') ?>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><img src="../../assets/img/logo_prt5.png" alt="Planta de revision tecnica" height="56" width="180"></a>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Administrador de usuarios <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-user-plus"></i> Nuevo usuario</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Reportes
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>   
-            <div>
-                <a class="btn btn-danger btn-lg float-right text-light" href="../EndSession/end.php">cerrar sesión</a>
-            </div>
-        </nav>
+        <?php include('../../master-page/nav-admin.php') ?>
+        <?php 
+            if(!$_GET){
+                header('Location: ./?pagina=1');
+            }
+
+            if($_GET['pagina'] > $paginas || $_GET['pagina'] < 1){
+                header('Location: ./?pagina=1');
+            }
+        ?>
         <main class="container">
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -83,7 +64,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="formData" method="POST" autocomplete="off" action="../../DataManager/Data/inserts.php">
+                            <form id="formAddUser" method="POST" autocomplete="off" action="../../DataManager/Data/inserts.php">
                                 <div class="form-group">
                                     <label for="nombre-usuario" class="col-form-label">Nombre:</label>
                                     <input type="text" name="uName" class="form-control" id="nombre-usuario" required="">
@@ -104,35 +85,85 @@
                                     <input type="email" name="uMail" class="form-control" id="apellido-materno" required="" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}">
                                     <div class="invalid-feedback">¡Debe ingeresar un e-mail valido!</div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="rol-usuario" class="col-form-label">Rol:</label>
-                                    <select class="form-control" name="uRol" id="rol-usuario" required="">
-                                        <?php 
-                                            foreach($resultRoles as $rol){
-                                                echo('<option value="'.$resultRoles[$countRoles]->IDRolUsuario.'">'.$resultRoles[$countRoles]->DescRolUsuario.'</option>');
-                                                $countRoles++;
-                                            }
-                                        ?>
-                                    </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="planta-usuario" class="col-form-label">Planta:</label>
+                                            <select class="form-control" name="uPrt" id="planta-usuario" required="">
+                                                <?php 
+                                                    foreach($resultPlantas as $planta){
+                                                        echo('<option value="'.$resultPlantas[$countPlantas]->IDPrt.'">'.$resultPlantas[$countPlantas]->DescPrt.'</option>');
+                                                        $countPlantas++;
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class = "col">    
+                                        <div class="form-group">
+                                            <label for="rol-usuario" class="col-form-label">Rol:</label>
+                                            <select class="form-control" name="uRol" id="rol-usuario" required="">
+                                                <?php 
+                                                    foreach($resultRoles as $rol){
+                                                        echo('<option value="'.$resultRoles[$countRoles]->IDRolUsuario.'">'.$resultRoles[$countRoles]->DescRolUsuario.'</option>');
+                                                        $countRoles++;
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>    
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" id="btnData" class="btn btn-primary" form="formData">Guardar</button>
+                            <button type="submit" id="btnAddUser" class="btn btn-primary" form="formAddUser">Guardar</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table mt-5">
+            <!--Paginacion-->
+            <div class="row mt-5">
+                <div class="col">
+                    <a class="nav-link text-success font-weight-bold" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-user-plus"></i> Nuevo funcionario</a>
+                </div>
+                <div class="col">
+                    <span class="font-weight-bold">Usuarios</span>
+                </div>
+                <div class="col">
+                    <nav aria-label="..." class="float-right">
+                        <ul class="pagination">
+                            <li class="page-item <?php echo($_GET['pagina'] <= 1 ? 'disabled' : ''); ?>">
+                                <a class="page-link" href="?pagina=<?php echo($_GET['pagina']-1); ?>">
+                                    Anterior
+                                </a>
+                            </li>
+                            <?php for($i=0; $i<$paginas; $i++): ?>
+                                    <li class="page-item <?php echo($_GET['pagina'] == $i+1 ? 'active' : ''); ?>" >
+                                        <a class="page-link" href="?pagina=<?php echo($i+1); ?>"> 
+                                            <?php echo($i+1); ?> <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                            <?php endfor ?>   
+                            
+                            <li class="page-item <?php echo($_GET['pagina'] >= $paginas ? 'disabled' : ''); ?>">
+                                <a class="page-link" href="?pagina=<?php echo $_GET['pagina']+1; ?>">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+            <table class="table mt-1">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Acción</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Email</th>
                         <th scope="col">Rol</th>
-                        <th scope="col">Acción</th>
+                        <th scope="col">Planta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,20 +173,28 @@
                     if (empty($result)){
                         echo ('<span class="h3" style="position: relative;margin-top: 0px;top: 30px;"> No existe Data</span>');
                     }else {
-                        foreach ($result as $usuario) {
+                        if($finalizar > $totalResults){
+                            $finalizar = $totalResults;
+                        }
+                        for ($i = $iniciar; $i< $finalizar; $i++) {
                             echo('<tr>
-                            <th scope="row">'.($countUser+1).'</th>
-                            <td>'.$result[$countUser]->NombreUsuario.'</td>
-                            <td>'.$result[$countUser]->ApellidoPaternoUsuario.'</td>
-                            <td>'.$result[$countUser]->CorreoElectronicoUsuario.'</td>
-                            <td>'.$result[$countUser]->DescRolUsuario.'</td>
+                            <th scope="row">'.($i+1).'</th>
                             <td>
-                                <a class="btn btn-danger btn-lg text-light" href="#" data-toggle="modal" data-target="#exampleModal'.$countUser.'"><i class="fas fa-trash-alt mr-2"></i></a>
-                                <a class="btn btn-warning btn-lg text-light" href="#" data-toggle="modal" data-target="#exampleModalEdit'.$countUser.'"><i class="fas fa-user-edit"></i></a>
+                                <span data-toggle="modal" data-target="#exampleModal'.$i.'">
+                                    <a class="text-danger" href="#" data-toggle="tooltip" title="Eliminar usuario"><i class="fas fa-trash-alt mr-2"></i></a>
+                                </span>
+                                <span data-toggle="modal" data-target="#exampleModalEdit'.$i.'">
+                                    <a class="text-warning" href="#" data-toggle="tooltip" title="Editar usuario"><i class="fas fa-user-edit"></i></a>
+                                </span>          
                             </td>
+                            <td>'.$result[$i]->NombreUsuario.'</td>
+                            <td>'.$result[$i]->ApellidoPaternoUsuario.'</td>
+                            <td>'.$result[$i]->CorreoElectronicoUsuario.'</td>
+                            <td>'.$result[$i]->DescRolUsuario.'</td>
+                            <td>'.$result[$i]->DescPrt.'</td>
                             </tr>
     
-                            <div class="modal fade" id="exampleModal'.$countUser.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -165,34 +204,38 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="formDataE'.$countUser.'" action="../../DataManager/Data/Eliminar.php" method="POST">
+                                <form id="formDataE'.$i.'" action="../../DataManager/Data/Eliminar.php" method="POST">
                                     <div class="form-group">
                                         <label for="nombre-usuario" class="col-form-label">Nombre:</label>
-                                        <input type="text" name="uName" class="form-control" id="nombre-usuario" value="'.$result[$countUser]->NombreUsuario.'" readonly>
+                                        <input type="text" name="uName" class="form-control" id="nombre-usuario" value="'.$result[$i]->NombreUsuario.'" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido-paterno" class="col-form-label">Apellido Paterno:</label>
-                                        <input type="text" name="uApePat" class="form-control" id="apellido-paterno" value="'.$result[$countUser]->ApellidoPaternoUsuario.'" readonly>
+                                        <input type="text" name="uApePat" class="form-control" id="apellido-paterno" value="'.$result[$i]->ApellidoPaternoUsuario.'" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="email-user" class="col-form-label">E-mail:</label>
-                                        <input type="email" name="uMail" class="form-control" id="email-user" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" value="'.$result[$countUser]->CorreoElectronicoUsuario.'" readonly>
+                                        <input type="email" name="uMail" class="form-control" id="email-user" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" value="'.$result[$i]->CorreoElectronicoUsuario.'" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="planta-usuario" class="col-form-label">Planta:</label>
+                                        <input type="text" name="uPrt" class="form-control" id="planta-usuario" value="'.$result[$i]->DescPrt.'" readonly>                
                                     </div>
                                     <div class="form-group">
                                         <label for="rol-usuario" class="col-form-label">Rol:</label>
-                                        <input type="text" name="uRol" class="form-control" id="rol-usuario" value="'.$result[$countUser]->DescRolUsuario.'" readonly>                
+                                        <input type="text" name="uRol" class="form-control" id="rol-usuario" value="'.$result[$i]->DescRolUsuario.'" readonly>                
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" id="btnData" class="btn btn-danger" form="formDataE'.$countUser.'">Eliminar</button>
+                                <button type="submit" id="btnData" class="btn btn-danger" form="formDataE'.$i.'">Eliminar</button>
                             </div>
                         </div>
                     </div>
                 </div>
     
-                <div class="modal fade" id="exampleModalEdit'.$countUser.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModalEdit'.$i.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -202,49 +245,126 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="formDataEdit'.$countUser.'" action="../../DataManager/Data/updateUsuario.php" method="POST">
+                                <form id="formDataEdit'.$i.'" action="../../DataManager/Data/updateUsuario.php" method="POST">
                                     <div class="form-group">
                                         <label for="nombre-usuario" class="col-form-label">Nombre:</label>
-                                        <input type="text" name="uName" class="form-control" id="nombre-usuario" value="'.$result[$countUser]->NombreUsuario.'" required>
+                                        <input type="text" name="uName" class="form-control" id="nombre-usuario" value="'.$result[$i]->NombreUsuario.'" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido-paterno" class="col-form-label">Apellido Paterno:</label>
-                                        <input type="text" name="uApePat" class="form-control" id="apellido-paterno" value="'.$result[$countUser]->ApellidoPaternoUsuario.'" required>
+                                        <input type="text" name="uApePat" class="form-control" id="apellido-paterno" value="'.$result[$i]->ApellidoPaternoUsuario.'" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido-materno" class="col-form-label">Apellido Materno:</label>
-                                        <input type="text" name="uApeMat" class="form-control" id="apellido-materno" value="'.$result[$countUser]->ApellidoMaternoUsuario.'" required>
+                                        <input type="text" name="uApeMat" class="form-control" id="apellido-materno" value="'.$result[$i]->ApellidoMaternoUsuario.'" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email-user" class="col-form-label">E-mail:</label>
-                                        <input type="email" name="uMail" class="form-control" id="email-user" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" value="'.$result[$countUser]->CorreoElectronicoUsuario.'" readonly required>
+                                        <input type="email" name="uMail" class="form-control" id="email-user" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" value="'.$result[$i]->CorreoElectronicoUsuario.'" readonly required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="rol-usuario" class="col-form-label">Rol:</label>
-                                        <select class="form-control" name="uRol" id="rol-usuario" required="">'); 
-                                                $countRoles=0;
-                                                foreach($resultRoles as $rol){
-                                                    echo('<option value="'.$resultRoles[$countRoles]->IDRolUsuario.'">'.$resultRoles[$countRoles]->DescRolUsuario.'</option>');
-                                                    $countRoles++;
-                                                }
-                                        echo('</select>
-                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="planta-usuario" class="col-form-label">Planta:</label>
+                                                <select class="form-control" name="uPrt" id="planta-usuario" required="">');
+                                                        $countPlantas = 0;
+                                                        foreach($resultPlantas as $planta){
+                                                            if($resultPlantas[$countPlantas]->DescPrt == $result[$i]->DescPrt){
+                                                                echo('<option value="'.$resultPlantas[$countPlantas]->IDPrt.'" selected>'.$resultPlantas[$countPlantas]->DescPrt.'</option>');
+                                                            }else{
+                                                                echo('<option value="'.$resultPlantas[$countPlantas]->IDPrt.'">'.$resultPlantas[$countPlantas]->DescPrt.'</option>');
+                                                            }
+                                                            $countPlantas++;
+                                                        }
+                                            echo('</select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="rol-usuario" class="col-form-label">Rol:</label>
+                                                <select class="form-control" name="uRol" id="rol-usuario" required="">'); 
+                                                        $countRoles=0;
+                                                        foreach($resultRoles as $rol){
+                                                            if($resultRoles[$countRoles]->DescRolUsuario == $result[$i]->DescRolUsuario){
+                                                                echo('<option value="'.$resultRoles[$countRoles]->IDRolUsuario.'" selected>'.$resultRoles[$countRoles]->DescRolUsuario.'</option>');
+                                                            }else{
+                                                                echo('<option value="'.$resultRoles[$countRoles]->IDRolUsuario.'">'.$resultRoles[$countRoles]->DescRolUsuario.'</option>');
+                                                            }
+                                                            $countRoles++;
+                                                        }
+                                                echo('</select>
+                                            </div>
+                                        </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" id="btnData" class="btn btn-primary" form="formDataEdit'.$countUser.'">Guardar</button>
+                                <button type="submit" id="btnData" class="btn btn-primary" form="formDataEdit'.$i.'">Guardar</button>
                             </div>
                         </div>
                     </div>
                 </div>
                             ');
-                            $countUser++;
                         }
                     }
                 ?>
                 </tbody>
             </table>
+            <!--Paginacion-->
+            <div class="paginacion">
+                <nav aria-label="..." class="float-right">
+                    <ul class="pagination">
+                        <li class="page-item <?php echo($_GET['pagina'] <= 1 ? 'disabled' : ''); ?>">
+                            <a class="page-link" href="?pagina=<?php echo($_GET['pagina']-1); ?>">
+                                Anterior
+                            </a>
+                        </li>
+                        <?php for($i=0; $i<$paginas; $i++): ?>
+                                <li class="page-item <?php echo($_GET['pagina'] == $i+1 ? 'active' : ''); ?>" >
+                                    <a class="page-link" href="?pagina=<?php echo($i+1); ?>"> 
+                                        <?php echo($i+1); ?> <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                        <?php endfor ?>   
+                        
+                        <li class="page-item <?php echo($_GET['pagina'] >= $paginas ? 'disabled' : ''); ?>">
+                            <a class="page-link" href="?pagina=<?php echo $_GET['pagina']+1; ?>">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <style>
+                /* Sticky footer styles
+                -------------------------------------------------- */
+                html {
+                position: relative;
+                min-height: 100%;
+                }
+                .paginacion {
+                position: absolute;
+                right:6%;
+                bottom: 0;
+                
+                /* Set the fixed height of the footer here */
+                height: 50px;
+                line-height: 25px; /* Vertically center the text there */
+                }
+            </style>
+            <script>
+                $("#btnAddUser").click(function(event) {
+
+                //Fetch form to apply custom Bootstrap validation
+                var form = $("#formAddUser")
+
+                if (form[0].checkValidity() === false) {
+                event.preventDefault()
+                event.stopPropagation()
+                }
+
+                form.addClass('was-validated');
+                });
+
+            </script>
         </main>
     </body>
 </html>

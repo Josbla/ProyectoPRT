@@ -17,12 +17,13 @@ class Autenticacion extends ConexionDatabase{
         if($userName!=null && $password!=null){
             $connection = ConexionDatabase::connect();
             if($connection){
-                $sqlQuery="select IDUsuario, NombreUsuario, ApellidoPaternoUsuario, DescRolUsuario, EstadoPassword 
+                $sqlQuery="select IDUsuario, NombreUsuario, ApellidoPaternoUsuario, DescRolUsuario, EstadoPassword, IDPrt 
                 from Usuarios inner join DataUsuario on IDUsuario = IDUsuarioDataUsuario
                 and CorreoElectronicoUsuario = '".$userName."'
                 inner join RolesUsuario on RolUsuario = IDRolUsuario
                 inner join PasswordUsuario on IDUsuario = IDUsuarioPassword
-                and PasswordUsuario = '".$password."';";
+                and PasswordUsuario = '".$password."'
+				inner join PlantaRevisionTecnica on IDPrt = PlantaUsuario;";
                 
                 $statement = sqlsrv_query($connection, $sqlQuery);
                 if(!$statement){
@@ -53,6 +54,7 @@ $_SESSION['nombre'] = $result->NombreUsuario;
 $_SESSION['apellido'] = $result->ApellidoPaternoUsuario;
 $_SESSION['rol'] = $result->DescRolUsuario;
 $_SESSION['estado-pwd'] = $result->EstadoPassword;
+$_SESSION['idPrt'] = $result->IDPrt;
 
 if($_SESSION['estado-pwd'] == 3){
     header('Location: ../../app-authorized/Cambio-pass');

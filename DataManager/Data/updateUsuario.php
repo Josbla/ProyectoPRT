@@ -11,14 +11,16 @@ class UpdateUsuario extends ConexionDatabase{
     
         if($connection){
             
-            $rol = strtoupper($_POST['uRol']);
+            $rol = $_POST['uRol'];
+            $planta =$_POST['uPrt'];
             $nombre = strtoupper($_POST['uName']);
             $apePat = strtoupper($_POST['uApePat']);
             $apeMat = strtoupper($_POST['uApeMat']);
-            $sqlQuery="update Usuarios set RolUsuario =".$rol." where IDUsuario= '".$idReal."';
-            update DataUsuario set NombreUsuario ='".$nombre."' where IDUsuarioDataUsuario = '".$idReal."';
-            update DataUsuario set ApellidoPaternoUsuario ='".$apePat."' where IDUsuarioDataUsuario = '".$idReal."';
-            update DataUsuario set ApellidoMaternoUsuario = '".$apeMat."' where IDUsuarioDataUsuario = '".$idReal."';";
+            $sqlQuery="update Usuarios set RolUsuario =".$rol." where IDUsuario= ".$idReal.";
+            update Usuarios set PlantaUsuario =".$planta." where IDUsuario=".$idReal.";
+            update DataUsuario set NombreUsuario ='".$nombre."' where IDUsuarioDataUsuario = ".$idReal.";
+            update DataUsuario set ApellidoPaternoUsuario ='".$apePat."' where IDUsuarioDataUsuario = ".$idReal.";
+            update DataUsuario set ApellidoMaternoUsuario = '".$apeMat."' where IDUsuarioDataUsuario = ".$idReal.";";
     
             $statement = sqlsrv_query($connection, $sqlQuery);
         }
@@ -44,7 +46,7 @@ if(!empty($_SESSION['rol'])){
 
 $updateUsuario = new UpdateUsuario;
 
-if(!empty($_POST['uMail']) & !empty($_POST['uName']) & !empty($_POST['uApePat']) & !empty($_POST['uApeMat']) & !empty($_POST['uRol'])){
+if(!empty($_POST['uMail']) & !empty($_POST['uName']) & !empty($_POST['uApePat']) & !empty($_POST['uApeMat']) & !empty($_POST['uRol']) & !empty($_POST['uPrt'])){
     $updateUsuario -> update($_POST['uMail']);
 }else{
     session_start();

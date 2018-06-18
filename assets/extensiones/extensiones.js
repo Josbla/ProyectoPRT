@@ -11,7 +11,12 @@ $("#btnData").click(function(event) {
   form.addClass('was-validated');
 });
 
-  
+//tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+//encriptacion  
 function SubmitsEncry(userPwd) {
   if (userPwd != "") {
     var hash = CryptoJS.SHA3(userPwd);

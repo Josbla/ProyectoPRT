@@ -4,6 +4,7 @@
         $scope.uName;
         $scope.uPwd;
         $scope.uPwd2;
+        $scope.regionesAngular;
 
         $scope.enviarData = function(){
             if($scope.uPwd!='' & $scope.uPwd!=null){

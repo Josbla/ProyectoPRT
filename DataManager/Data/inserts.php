@@ -25,11 +25,11 @@ class InsertUsuario extends ConexionDatabase{
 
             if($mail !=null & $mail!='' & $nombre != null & $nombre !='' & $apePat !=null & $apePat!='' & $apeMat !=null & $apeMat!=''){
                 
-                $sqlQueryUsuario = "Insert into Usuarios values(".$ultimaID.",'".$hoy.'T'.$hora."',1,".$_POST['uRol'].");";
+                $sqlQueryUsuario = "Insert into Usuarios values(".$ultimaID.",'".$hoy.'T'.$hora."',1,".$_POST['uRol'].",".$_POST['uPrt'].");";
                 
                 if ($statement = sqlsrv_query($connection, $sqlQueryUsuario)){
                     
-                    $sqlQueryDataUsuario = "Insert into DataUsuario values('".$mail."','".$nombre."','".$apePat."','".$apeMat."',".$ultimaID.",2);";
+                    $sqlQueryDataUsuario = "Insert into DataUsuario values('".$mail."','".$nombre."','".$apePat."','".$apeMat."',".$ultimaID.",3);";
                     
                     if ($statement = sqlsrv_query($connection, $sqlQueryDataUsuario)){
                         
