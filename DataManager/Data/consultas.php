@@ -54,7 +54,8 @@ class Consultas extends ConexionDatabase{
         $connection = ConexionDatabase::connect();
 
         if($connection){
-            $sqlQuery = "select DescPrt,IDRegion,DescRegion,IDProvincia,DescProvincia, IDComuna, DescComuna, DireccionPrt 
+            $sqlQuery = "select IDPrt,DescPrt,IDRegion,DescRegion,IDProvincia,DescProvincia,
+             IDComuna, DescComuna, DireccionPrt, FonoPrt 
             from PlantaRevisionTecnica
             inner join Comuna on IDComuna = ComunaPrt
             inner join Provincia on IDProvincia = ProvinciaComuna
@@ -98,6 +99,32 @@ class Consultas extends ConexionDatabase{
         if($connection){
 
             $sqlQuery="select MAX(IDUsuario) from Usuarios;";
+
+            $statement = sqlsrv_query($connection, $sqlQuery);
+
+            if(!$statement){
+                echo('Ocurrio el siguiente error: ');
+                die( print_r( sqlsrv_errors(), true));
+            }
+
+            if( sqlsrv_fetch( $statement ) === false) {
+                echo('Ocurrio el siguiente error: ');
+                die( print_r( sqlsrv_errors(), true));
+            }
+
+            $id = sqlsrv_get_field( $statement, 0);
+        }
+        sqlsrv_close($connection);
+        return $id;
+    }
+
+    function getLastIDPlanta(){
+
+        $connection = ConexionDatabase::connect();
+
+        if($connection){
+
+            $sqlQuery="select MAX(IDPrt) from PlantaRevisionTecnica;";
 
             $statement = sqlsrv_query($connection, $sqlQuery);
 
