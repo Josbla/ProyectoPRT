@@ -21,7 +21,7 @@
                         </a>
                     </div>
                     <div class="col-sm-6">
-                        <a href="./#" class="d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-purple text-negro" >
+                        <a href="./lucesetapauno" class="d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-purple text-negro" >
                             <i class="far fa-lightbulb"></i>
                             Luces
                         </a>

@@ -61,11 +61,11 @@
 					</div>    				
 				</div>
 			</div>
-			<div class="col-sm-12 d-flex mt-5">
-				<div class="col-sm-3 mt-5	">
-					<button class="btn btn-primary btn-lg btn-block mb-3">GUARDAR</button>
-				</div>
-			</div>	
+			<div class="col-sm-12 d-flex mt-5 ml-5">
+					<div class="col-sm-3 mt-5 ml-4">
+						<a href="./../" class="btn btn-primary btn-lg btn-block mb-3">GUARDAR</a>
+					</div>
+			</div>
 		</form>
 	</section>    
 	<!-- FIN CONTENIDO -->

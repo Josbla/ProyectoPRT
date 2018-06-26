@@ -15,13 +15,13 @@
                 <hr>
                 <div class="mt-3 d-flex">
                     <div class="col-sm-6">
-                        <a href="./#" class=" d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-verde text-negro">
+                        <a href="./Inspeccion-Visual" class="link d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-verde text-negro">
                             <i class="far fa-eye"></i>
                             Inspeccion visual
                         </a>
                     </div>
                     <div class="col-sm-6">
-                        <a href="./#" class="d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-purple text-negro" >
+                        <a href="./lucesetapados" class="link d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-purple text-negro" >
                             <i class="far fa-lightbulb"></i>
                             Luces
                         </a>
@@ -30,17 +30,23 @@
 
                 <div class="mt-3 d-flex">
                     <div class="col-sm-6">
-                        <a href="./#" class="d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-amarillo text-negro">
+                        <a href="./alineacion" class="link d-flex align-items-center justify-content-center btn btn-block btn-dashboard size-text-btn bg-amarillo text-negro">
                             <i class="fas fa-tape"></i>
                             Alineación
                         </a>
                     </div>
                     <div class="col sm 6">
-                        <a href="./#" class="d-flex align-items-center justify-content-center col-sm-12 btn btn-block mb-4 btn-dashboard size-text-btn bg-mgpurple text-negro">
+                        <a href="./sistemasuspension" class="link d-flex align-items-center justify-content-center col-sm-12 btn btn-block mb-4 btn-dashboard size-text-btn bg-mgpurple text-negro">
                             <i class="fas fa-arrows-alt-v"></i>
                             <i class="fas fa-arrows-alt-v"></i>
                             Sistema de suspención
                         </a>
+                    </div>
+                </div>
+                <div class="col sm 6">
+                    <a href="./#" class="link informe d-flex align-items-center justify-content-center bg-secondary col-sm-12 btn btn-block mb-4 btn-dashboard size-text-btn text-negro">
+                        Informe
+                    </a>
                 </div>
             </div>
         </section>
@@ -50,11 +56,16 @@
     <?php include('./../../master-page/imports.php') ?>
 
     <style>
+
+        .informe {
+            pointer-events: none;
+        }
+        
         .btn-dashboard{
             height: 70px;
         }
 
-            a:hover{
+            .link:hover{
                 background-color: #2c3e50;
                 color: #fff;
             }
@@ -66,7 +77,6 @@
             .bordes{
                 border: 0px transparent;
             }
-
             .bg-amarillo {
                 background-color: #fbc531;
             }

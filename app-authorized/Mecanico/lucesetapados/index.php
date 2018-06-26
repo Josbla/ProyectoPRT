@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<?php include('./../../../master-page/header.php') ?>
+<?php include('./../../../master-page-lvl3/header.php') ?>
 <body>
-	<?php include('./../../../master-page/nav-bar.php') ?>
+	<?php include('./../../../master-page-lvl3/nav-bar.php') ?>
 	<!-- CONTENIDO SITIO -->
 	<div class="container">
 		<header class="mt-3">
@@ -113,14 +113,14 @@
 				</div>
 				<div class="col-sm-12 d-flex mt-5">
 					<div class="col-sm-4">
-						<button class="btn btn-primary btn-lg btn-block">FINALIZAR</button>
+						<a href="./../" class="btn btn-primary btn-lg btn-block">Guardar</a>
 					</div>
 				</div>
 			</form>
 		</section>
 	</div>
 	<!-- FIN CONTENIDO -->
-	<?php include('./../../../master-page/footer.php') ?>
-	<?php include('./../../../master-page/imports.php') ?>
+	<?php include('./../../../master-page-lvl3/footer.php') ?>
+	<?php include('./../../../master-page-lvl3/imports.php') ?>
 </body>
 </html>

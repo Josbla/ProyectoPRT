@@ -52,14 +52,14 @@
                 <?php for($x=0; $x< $countComunas; $x++): ?>
                         arrayComunas.push({id : '<?php echo($comunas[$x]->IDComuna) ?>', nombre: '<?php echo(utf8_encode($comunas[$x]->DescComuna)) ?>', pComuna:'<?php echo( $comunas[$x]->ProvinciaComuna) ?>' });
                 <?php endfor ?>
-                $scope.index = 0;
+                
                 $scope.regiones = arrayRegiones;
                 $scope.regionSelec = arrayRegiones[0].id;
+                $scope.regionSelec2;
                 $scope.comunaSelec;
                 $scope.CurrentDate = new Date();
                 $scope.Hora = $scope.CurrentDate.getHours();
                 $scope.Minutos = $scope.CurrentDate.getMinutes();
-                
                 $scope.updateComunas= function(pRegion){
                     provinciaRegion=[];
                     comunaFiltrada=[];
@@ -77,14 +77,6 @@
                     }
                     $scope.comunas = comunaFiltrada;
                 }  
-                
-                $scope.updateIndex = function(region, comuna){
-                    var comunaReal = arrayComunas.find(function(element){
-                        return element.id == comuna;
-                    });
-                    $scope.regionSelec2 = arrayRegiones[region].id;
-                    $scope.comunaSelec2 = comunaReal.id;
-                }
                 
                 
             }]);
@@ -146,7 +138,7 @@
                                     <a class="text-danger" href="#" data-toggle="tooltip" title="Eliminar planta"><i class="fas fa-trash-alt mr-2"></i></a>
                                 </span>
                                 <span data-toggle="modal" data-target="#exampleModalEdit<?php echo($i) ?>">
-                                    <a class="text-warning" href="#" data-toggle="tooltip" title="Editar planta" ng-click="updateIndex(<?php echo($result[$i]->IDRegion) ?>,<?php echo($result[$i]->IDComuna) ?>)"><i class="fas fa-edit"></i></a>
+                                    <a class="text-warning" href="#" data-toggle="tooltip" title="Editar planta"><i class="fas fa-edit"></i></a>
                                 </span>          
                             </td>
                             <td> <?php echo($result[$i]->DescPrt) ?></td>
@@ -351,9 +343,9 @@
                                     <div class = "col">
                                         <div class="form-group">
                                             <label for="apellido-paterno" class="col-form-label">Región:</label>
-                                            <select class="form-control" id="rol-usuario" required="" ng-model="regionSelec2" ng-change="updateComunas(regionSelec2)" st-search="target">
+                                            <select class="form-control" id="rol-usuario" required="" ng-model="regionSelec2" ng-change="updateComunas($scope.regionSelec2)">
                                                 <option ng-repeat="region in regiones"  
-                                                    value="{{ region.id }}">
+                                                    value="{{ region.id }}" >
                                                     {{ region.nombre }}
                                                 </option>
                                             </select>
@@ -363,9 +355,10 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="comunaPrt" class="col-form-label">Comuna:</label>
-                                            <select name="pComuna" class="form-control" id="comunaPrt" required="" ng-model="comunaSelec2">
+                                            <select name="pComuna" class="form-control" id="comunaPrt" required="" ng-model="comunaSelec">
                                                 <option ng-repeat="comuna in comunas"
-                                                    value="{{ comuna.id }}">
+                                                    value="{{ comuna.id }}"
+                                                    ng-selected = "{{ comuna.id }}">
                                                     {{ comuna.nombre }}
                                                 </option>
                                             </select>

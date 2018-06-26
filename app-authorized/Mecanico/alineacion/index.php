@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-sm-12 d-flex mt-5">
                         <div class="col-sm-4">
-                            <button class="btn btn-primary btn-lg btn-block">GUARDAR</button>
+                            <a href="./../" class="btn btn-primary btn-lg btn-block">GUARDAR</a>
                         </div>
                     </div>
                 </form>
